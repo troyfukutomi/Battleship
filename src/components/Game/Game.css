@@ -1,0 +1,381 @@
+@import './open-color.css';
+
+.board {
+  width: 400px;
+  height: 400px;
+  border: 2px solid var(--oc-gray-4);
+  margin: 1em 2em 2em 1em;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.board div {
+  width: 10%;
+  height: 10%;
+  box-sizing: border-box;
+  background: darkturquoise;
+  border: 1px solid black;
+  cursor: crosshair;
+  transition: background-color 100ms ease-in-out;
+}
+
+/* Option 1 */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Option 2 */
+@keyframes shake {
+  from {
+    transform: translate(30%, 17%);
+  }
+
+  to {
+    transform: translate(-30%, -17%);
+  }
+}
+
+/* SQUARE COLORS */
+
+/* Empty */
+.board .empty {
+  background-color:  darkturquoise;
+}
+.board .empty:hover {
+  background-color: var(--oc-yellow-2);
+}
+
+/* Ship */
+
+.board .ship {
+  background-color: silver;
+  border: 1px solid black;
+}
+
+.board .ship:hover {
+  background-color: silver;
+}
+
+/* Hit  */
+
+.board .hit {
+  background-color: red;
+  border: 1px solid darkred;
+}
+
+/* Miss */
+
+.board .miss {
+  background-color: darkslategrey;
+  border: 1px solid black;
+}
+
+/* Sunk ship */
+
+.board .sunk {
+  background-color: black;
+  border: 1px solid grey;
+  /* animation: shake 50ms 6 alternate backwards; */
+}
+
+/* Forbidden square  */
+
+.board .forbidden {
+  background-color: darkred;
+  border: 1px solid red;
+}
+
+
+
+
+:root {
+    --micro-space: 0.3em;
+    --small-space: 1em;
+    --medium-space: 2em;
+  }
+  
+  /* REPLICAS  */
+  
+  #replica-fleet {
+    padding: var(--small-space);
+  }
+  
+  #replica-fleet > * + * {
+    margin-top: var(--small-space);
+  }
+  
+  .replica,
+  .replicaBoxes {
+    display: flex;
+    flex-direction: row;
+    
+  }
+  
+  .replica {
+    width: 150px;
+    height: 35px;
+    align-items: center;
+    justify-content: space-between;
+    background-color:  navy;
+    border-radius: 3px;
+    padding: 5px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px hsla(0, 0%, 0.2);
+    margin: 2px;
+  }
+  
+  .replica:hover {
+    background-color: var(--oc-indigo-3);
+    opacity: 0.9;
+  }
+  
+  .replica:active {
+    position: relative;
+    top: 1px;
+  }
+  
+  .placing {
+    width: 150px;
+    height: 35px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--oc-indigo-2);
+     border-radius: 3px;
+    padding: 5px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px hsla(0, 0%, 0.2);
+    margin: 2px;
+  }
+  
+  .placing:hover {
+    background-color: var(--oc-indigo-2);
+  }
+  
+  /* Each ship name */
+  
+  .replicaTitle {
+    font-size: 14px;
+    text-transform: capitalize;
+    font-family: 'Libre Franklin', sans-serif;
+    color: var(--oc-white);
+  }
+  
+  .smallBox {
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    background-color:silver;
+  }
+  
+  /* Firing info */
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  li {
+    margin: 5px;
+  }
+  
+  /* TODO: FIX THIS SCREEN SO THINGS FIT NICELY!!!  */
+  
+  @media screen and (max-width: 768px) {
+    #replica-ships {
+      max-width: 400px;
+      height: 250px;
+    }
+  }
+  
+  .playerTitle {
+    color: blue;
+    text-align: center;
+  }
+
+
+
+
+body {
+  background-color: var(--oc-white);
+  margin: 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+body,
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--small-space);
+}
+
+main,
+section {
+  margin: var(--medium-space);
+  text-align: center;
+}
+
+main {
+  max-width: 35em;
+}
+
+#gameScreen {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@media screen and (max-width: 1100px) {
+  #game-screen {
+    flex-direction: column;
+  }
+}
+
+/* Box containing ships and tips */
+#available-ships,
+#panels {
+  width: 200px;
+  max-height: 500px;
+  padding: var(--small-space);
+  font-family: var(--headlines);
+  text-align: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.panelTitle {
+  font-size: 22px;
+  text-transform: uppercase;
+  color: blue;
+}
+
+.panel,
+#firing-info {
+  margin-top: var(--small-space);
+  font-family: var(--regular);
+  font-size: x-large;
+  text-transform: none;
+  color: var(--oc-gray-7);
+}
+
+.restart {
+  border-radius: 3px;
+  margin-top: 20px;
+  margin-left: 33%;
+  width: 150px;
+  height:35px;
+  color:white;
+  font-family: var(--regular);
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: underline;
+  /* margin: var(--small-space); */
+  background-color: red;
+}
+
+.winnerMessage {
+  font-size: xx-large;
+color: blue;
+}
+
+.gameOver {
+  font-size: xx-large;
+  color: blue;
+  font-weight: 1000;
+}
+
+/* HEADER AND SUBTITLE */
+
+/* Entire header */
+header {
+  text-align: center;
+}
+
+h1 {
+  color: var(--oc-indigo-8);
+  font-size: 38px;
+}
+
+.subtitle {
+  font-size: 22px;
+  color: var(--oc-indigo-4);
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-family: var(--header);
+  text-transform: uppercase;
+}
+
+/* Headings used in board and tip box */
+
+h2 {
+  color: var(--oc-red-7);
+  font-family: var(--headlines);
+}
+
+/* Regular text used in subtitle and tips */
+
+p {
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* BUTTONS */
+
+button {
+  width: 170px;
+  height: 50px;
+  border-radius: 3px;
+  font-family: var(--regular);
+  /* text-transform: uppercase; */
+  font-size: 16px;
+  margin: var(--small-space);
+  border: none;
+  background-color: blue;
+  color: var(--oc-gray-1);
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  position: relative;
+  top: 1px;
+}
+
+/* FOOTER */
+
+footer,
+footer a {
+  color: var(--oc-gray-7);
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--regular);
+}
+
+footer a:hover {
+  color: var(--oc-indigo-8);
+}
+
+footer a:visited {
+  color: var(--oc-indigo-4);
+}
+
